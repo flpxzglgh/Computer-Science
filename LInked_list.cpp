@@ -1,198 +1,200 @@
 #include <iostream>
 using namespace std;
-
 class Node{
 public:
-	Node* next;
+	Node *next;
 	int data;
 };
-
-class Linkedlist{
+class link{
 public:
-	int size;//the list size;
-	Node* head;
-	Linkedlist();
-	~Linkedlist();
-	void insert_at_begining(int data);
-	void insert_at_end(int data);
+	Node *head;
+	link();
+	~link();
+	void insert_at_begining(int value);
+	void insert_at_end(int value);
 	void insert_at_position(int,int);
 	void delete_at_position(int);
 	void delete_at_begining();
     void delete_at_end();
-
 	void display();
 };
- 
-Linkedlist::Linkedlist(){
-	this->size=0;
-	this->head=NULL;
-}
 
-Linkedlist::~Linkedlist(){
-	cout<<"LIST DELETED";
-}
-
-void Linkedlist::insert_at_begining(int data){
-	Node*node=new Node();
-	node->data=data;
-	node->next=this->head;
-	this->head=node;
-	this->size++;
-}
- void Linkedlist::insert_at_end(int data){
- 	Node *p = new Node;
-    Node *r = new Node;
-    Node *q = new Node;
-    r = this->head;
-    p->data = data;
-    p->next = NULL;
-    if(head == NULL){
-        head = p;
-    }else{
-        while(r->next!=NULL){
-            r = r->next;
-        }
-        r->next = p;
-    }
- }
-
-void Linkedlist::insert_at_position(int value,int position){
-	Node *p = new Node;
-    Node *l = new Node;
-    Node *r = new Node;
-    bool isFound = false;
-    p=head;
-    int count=0;
-    while(p != NULL){
-        if(count == position){
-            isFound = true;
-            break;
-        }
-        count++;
-        l = p;
-        p = p->next;
-
-    }
-    r->data=value;
-    l->next = r;
-    r->next = p;
-    if(isFound==false){
-    	cout<<"Bad position! Enter the data again!"<<endl;
-    	int v,p;
-    	cin>>v>>p;
-    	insert_at_position(v,p);
-    }
-}
-
-void Linkedlist::display(){
-	Node* h = this->head;
-	int i=1;
-	while(h){
-		cout<<i-1<<":"<<h->data<<endl;
-		h=h->next;
-		i++;
+void link::display(){
+	Node *first=new Node;
+	first=head;
+	while(first){
+		cout<<first->data<<endl;
+		first=first->next;
 	}
 }
 
-void Linkedlist::delete_at_position(int position){
-	Node *p = new Node;
-    Node *r = new Node;
-    bool isFound = false;
-    p = head;
-    int count=0;
-    while(p!=NULL){
-        if(count == position-1){
-            isFound = true;
-            break;
-        }
-        p = p->next;
-        r=p->next;
-        count++;
-       
-    }
-   		p->next=r->next;
-   		delete r;
+
+void link::delete_at_position(int pos){
+	if(head==0){
+		cout<<"this list is empty"<<endl;
+	}
+	else {
+		Node *p=new Node;
+		Node *r=new Node;
+		Node *stroe=new Node;
+		bool isf(0);
+		stroe=head;
+		int count=0;
+	if(pos==0){
+		delete_at_begining();
+	}else{
+		while(stroe!=0){
+			if(count==pos){
+				isf=1;
+				break;}
+			p=stroe;
+			count++;
+			stroe=stroe->next;
+		}
+		if(isf){
+			if(p->next==0){
+				delete_at_end();
+			}else{
+				p->next=stroe->next;
+				delete stroe;
+			}
+			}
+
+
+			else {
+				cout<<"this is bad";
+			}
+
+
+
+		}
+	}
+}
+
+void link::delete_at_end(){
+	Node *stroe=new Node;
+	Node *l=new Node;
+ 		stroe=head;
+	while(stroe->next!=0){
+		l=stroe;
+		stroe=stroe->next;
+	}
+	stroe=0;
+	l->next=stroe;
+
+	delete stroe;
+}
+
+void link::delete_at_begining(){
+	Node*stroe=new Node;
+	if(head==0){
+		cout<<"this list is empty!";
+	}
+	else{
+		stroe=head;
+		head=head->next;
+		delete stroe;
+	}
+}
+void link::insert_at_position(int value,int pos){
+	Node *nnode=new Node;
+	Node *stroe=new Node;
+	Node *l=new Node;
+	bool isf=0;
+	nnode->data=value;
+	stroe=head;
+	int count=0;
+	if(pos==0){
+		insert_at_begining(value);
+	}else{
+		while(stroe!=0){
+			if(count==pos){
+				isf=1;
+				break;}
+			l=stroe;
+			count++;
+			stroe=stroe->next;
+			//cout<<count*10<<endl;
+		}
+		if(isf){
+			if(l->next==0){
+				insert_at_end(value);
+			}else{
+				l->next=nnode;
+				nnode->next=stroe;}
+			}
+
+
+			else {
+				cout<<"this is bad";
+			}
+
+
+
+		}
+
+}
+
+void link::insert_at_begining(int value){
+	Node *nnode=new Node;
+	nnode->data=value;
+	nnode->next=head;
+	head=nnode;
+}
+
+void link::insert_at_end(int value){
+	Node *nnode=new Node;
+	Node *stroe=new Node;
+	nnode->data=value;
+	nnode->next=0;
+	stroe=head;
+	if(head==0){
+		head=nnode;
+	}else{
+		while(stroe->next!=0){
+			stroe=stroe->next;
+		}
+
+	stroe->next=nnode;
+
+	}
 
 
 }
 
-void Linkedlist::delete_at_begining(){
-   Node *p = new Node;
-    if(head == NULL){
-        cout<<"\nList is Empty\n";
-    }else{
-        p = head;
-        head = head->next;
-        delete p;
-    }
-
+link::~link(){
+	cout<<"this list is gone"<<endl;
 }
 
-void Linkedlist::delete_at_end(){
 
-	Node *p = new Node;
-  	Node *l = new Node;
-  if(head == NULL){
-    cout<<"\nList is Empty\n";
-  }else{
-    p = head;
-    if(p->next == NULL){
-        head = NULL;
-        delete p;
-    }else{
-        while(p->next!= NULL){
-            l = p;
-            p = p->next;
-        }
-        l->next = NULL;
-        delete p;
-    }
-  }
+link::link(){
+	head=0;
 }
 
-int main()
+
+
+int main(int argc, char const *argv[])
 {
-	
-	Linkedlist* list = new Linkedlist();
+	link l;
 
-/*
-	for (int i = 0; i < 11; ++i)
-   {
-       list->insert_at_begining(i);
-   }
-   list->display();
-   cout<<endl;
-   list->insert_at_position(333,1);
-   list->display();
+	for(int i=0;i<10;i++){
+		l.insert_at_end(i);
+	}
 
- cout<<endl;
- list->delete_at_position(3);
-    list->display();
+
+	l.display();
+	cout<<endl;
+	l.insert_at_position(111,9);
+	l.display();
+	l.delete_at_begining();
+	l.display();
+	cout<<endl;
+	l.delete_at_end();
+	l.display();
 
 cout<<endl;
-   list->insert_at_position(999,3);
-   list->display();*/
+	l.delete_at_position(3);
+	l.display();
 
-   for (int i = 0; i < 11; ++i)
-   {
-       list->insert_at_end(i);
-   }
-   list->display();
-
- cout<<endl;
- for (int i = 0; i < 3; ++i)
-   {
-       list->delete_at_begining();
-   }
-   list->display();
- cout<<endl;
-for (int i = 0; i < 3; ++i)
-   {
-       list->delete_at_end();
-   }
-   list->display();
-
-   //std::cout << "List Length: " << list->length << std::endl;
-   delete list;
-	return 0;
+		return 0;
 }
